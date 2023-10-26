@@ -45,6 +45,7 @@ ssh -4 -f -L $tunnelport:$remote_mysql_host:$remote_mysql_port $host sleep 10; \
   $mysqldump --opt --no-tablespaces --hex-blob -h 127.0.0.1 -P $tunnelport \
   -u $remote_mysql_user -p"$remote_mysql_password" $remote_mysql_database \
   --column-statistics=0 \
+  --skip-lock-tables \
   --complete-insert \
   --add-drop-table \
   > tmp4dumps/$remote_mysql_database.sql
