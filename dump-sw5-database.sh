@@ -21,6 +21,9 @@ echo "---------"
 echo "- Get Config for MySQL-Data transfer"
 remote_config=$(ssh "$host" "cat $webroot/config.php")
 
+# Use grep, to extract database-config (short or long version of array)
+remote_config=$(echo "$remote_config" | grep -Pzo "'db' => \[[^\[\]]*' | 'db' => \s*array\s*\(*[^\)]*")
+
 remote_mysql_host=$(echo "$remote_config" | grep -o "'host' => '[^']*'" | awk -F "'" '{print $4}')
 remote_mysql_port=$(echo "$remote_config" | grep -o "'port' => '[^']*'" | awk -F "'" '{print $4}')
 remote_mysql_user=$(echo "$remote_config" | grep -o "'username' => '[^']*'" | awk -F "'" '{print $4}')
